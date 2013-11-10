@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-NewPoolcOgameServer::Application.config.secret_key_base = '2dd31af33fd070e8cb8d52a90641f7181e7250de47df82387551756f58fffef2cb3f3d02756a3538648cff342d9aa34b655ba69206d255738f157524fc2245d6'
+NewPoolcOgameServer::Application.config.secret_key_base = 'b313b818b54e222810fd65c82a3cb437937c171c6914b5bc3e8ca3f31f0e8ddf158f56f7a215c67d2aae5e21b3d265c842099a6ecf52abd6097e2f6fa1a2e5bc'
