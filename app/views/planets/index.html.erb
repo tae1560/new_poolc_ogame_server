@@ -1,0 +1,37 @@
+<a href="reports/parse">parsing</a>
+<div ng-controller="TodoCtrl" class="itsthetable">
+  <table>
+    <thead>
+    <tr>
+      <th>번호</th>
+      <th>좌표</th>
+      <th>메탈</th>
+      <th>크리스탈</th>
+      <th>듀테륨</th>
+      <th>총합</th>
+      <th>필요 카소 갯수</th>
+      <th>업데이트 시간</th>
+      <th>상태</th>
+      <th>함대 수</th>
+      <th>방시 수</th>
+      <th>공격</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="planet in planets | orderBy:orderProp" class="{{class_of_row($index)}}" ng-init="init_planet(planet)">
+      <td>{{$index}}</td>
+      <td>{{planet.coords}}</td>
+      <td>{{planet.resource_report.metal}}</td>
+      <td>{{planet.resource_report.crystal}}</td>
+      <td>{{planet.resource_report.deuterium}}</td>
+      <td>{{planet.resource}}</td>
+      <td>{{planet.number_of_cargo}}</td>
+      <td>{{planet.time_diff}}</td>
+      <td>{{planet.player.status}}</td>
+      <td>{{planet.number_of_fleets}}</td>
+      <td>{{planet.number_of_defenses}}</td>
+      <td><a href="{{planet.attack_address}}" target="_blank">공격</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,18 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html ng-app>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "New Poolc Ogame Server" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "New Poolc Ogame Server" %>">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+    <script src="http://underscorejs.org/underscore-min.js"></script>
+
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
   </head>
   <body>
     <%# application layout styled for Twitter Bootstrap 3.0 %>
-    <header>
-      <%= render 'layouts/navigation' %>
-    </header>
+    <!--<header>-->
+      <!--<%= render 'layouts/navigation' %>-->
+    <!--</header>-->
     <main role="main">
       <div class="container">
          <div class="row">
