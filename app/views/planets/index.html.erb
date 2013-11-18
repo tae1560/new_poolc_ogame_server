@@ -18,7 +18,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="planet in planets | orderBy:orderProp" class="{{class_of_row($index)}}" ng-init="init_planet(planet)">
+    <tr ng-repeat="planet in planets | orderBy:orderProp" class="{{class_of_row($index)}}">
       <td>{{$index}}</td>
       <td>{{planet.coords}}</td>
       <td>{{planet.resource_report.metal}}</td>
@@ -26,7 +26,7 @@
       <td>{{planet.resource_report.deuterium}}</td>
       <td>{{planet.resource}}</td>
       <td>{{planet.number_of_cargo}}</td>
-      <td>{{planet.time_diff}}</td>
+      <td>{{planet.time_diff_str}}</td>
       <td>{{planet.player.status}}</td>
       <td>{{planet.number_of_fleets}}</td>
       <td>{{planet.number_of_defenses}}</td>

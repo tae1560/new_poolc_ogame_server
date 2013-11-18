@@ -2,6 +2,15 @@ function TodoCtrl($scope, $http) {
 
     $http.get('planets.json').success(function(data) {
         $scope.planets = data;
+
+        _.each($scope.planets, $scope.init_planet);
+
+        $scope.planets = _.filter($scope.planets, function(planet){ return planet.time_diff < 36000; });
+
+
+
+
+//        $scope.init_planet(planet);
     });
 
     $scope.class_of_row = function(index) {
@@ -59,6 +68,9 @@ function TodoCtrl($scope, $http) {
 //        alert("test")
 //        planet.resource = 0;
         seconds = parseInt((new Date() - new Date(planet.resource_report.time)) / 1000);
+
+        planet.time_diff = seconds;
+
         minutes = parseInt(seconds / 60);
         seconds = seconds % 60;
         hours = parseInt(minutes / 60);
@@ -67,9 +79,15 @@ function TodoCtrl($scope, $http) {
         str = ""
         if (hours > 0) str += hours + "시간 ";
         if (minutes > 0) str += minutes + "분 ";
-        planet.time_diff = str + seconds + "초 전";
+        planet.time_diff_str = str + seconds + "초 전";
 //        planet.time_diff = a++;
     }
+
+    $scope.customFilter = function() {
+       return function(input) {
+           return output;
+       }
+    };
 
     setInterval($scope.scheduler, 1000);
 //    setInterval(function(){alert("Hello")},3000);
