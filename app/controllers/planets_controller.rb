@@ -51,4 +51,14 @@ class PlanetsController < ApplicationController
     end
 
   end
+
+  def show
+    respond_to do |format|
+      format.json {
+        @planet = Planet.find_by_id(params[:id])
+        render json: @planet.to_json(:include => [:resource_report, :fleet_report, :defense_report, :building_report, :player])
+      }
+      format.html {}
+    end
+  end
 end

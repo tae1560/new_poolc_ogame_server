@@ -1,5 +1,5 @@
 <a href="reports/parse">parsing</a>
-<div ng-controller="TodoCtrl" class="itsthetable">
+<div ng-controller="planetIndexCtrl" class="itsthetable">
   <table>
     <thead>
     <tr>
@@ -20,12 +20,12 @@
     <tbody>
     <tr ng-repeat="planet in planets | orderBy:orderProp" class="{{class_of_row($index)}}">
       <td>{{$index}}</td>
-      <td>{{planet.coords}}</td>
+      <td><a href="planets/{{planet.id}}">{{planet.coords}}</a></td>
       <td>{{planet.resource_report.metal}}</td>
       <td>{{planet.resource_report.crystal}}</td>
       <td>{{planet.resource_report.deuterium}}</td>
       <td>{{planet.resource}}</td>
-      <td>{{planet.number_of_cargo}}</td>
+      <td>{{planet.number_of_large_cargo}}</td>
       <td>{{planet.time_diff_str}}</td>
       <td>{{planet.player.status}}</td>
       <td>{{planet.number_of_fleets}}</td>
