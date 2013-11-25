@@ -20,7 +20,7 @@
     <tbody>
     <tr ng-repeat="planet in planets | orderBy:orderProp" class="{{class_of_row($index)}}">
       <td>{{$index}}</td>
-      <td><a href="planets/{{planet.id}}">{{planet.coords}}</a></td>
+      <td><a href="planets/{{planet.id}}"  target="_blank">{{planet.coords}}</a></td>
       <td>{{planet.resource_report.metal}}</td>
       <td>{{planet.resource_report.crystal}}</td>
       <td>{{planet.resource_report.deuterium}}</td>
