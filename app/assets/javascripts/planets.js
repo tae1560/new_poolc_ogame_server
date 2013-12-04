@@ -20,6 +20,17 @@ function planetIndexCtrl($scope, $http) {
         $scope.filtered_planets = _.filter($scope.planets, function(planet){ return planet.time_diff < $scope.filter_time_diff; });
     }
 
+    $scope.filter_position = "";
+
+    $scope.filter_with_position = function() {
+        if($scope.filter_position.length > 0) {
+//            $scope.filtered_planets = _.filter($scope.planets, function(planet){ return planet.coords == $scope.filter_position; });
+            $scope.filtered_planets = _.filter($scope.planets, function(planet){ return planet.coords.indexOf($scope.filter_position) !== -1; });
+        } else {
+            $scope.filter_planets();
+        }
+    }
+
     $scope.class_of_row = function(index) {
         if (index % 2 == 1) return "odd";
         else return null;
