@@ -1,15 +1,24 @@
 function planetIndexCtrl($scope, $http) {
 
+    $scope.loding = "loding";
+
+    $scope.filter_time_diff = 7200;
+
     $http.get('/planets.json').success(function(data) {
         $scope.planets = data;
 
         _.each($scope.planets, $scope.init_planet);
+        $scope.filter_planets();
 
-        $scope.planets = _.filter($scope.planets, function(planet){ return planet.time_diff < 7200; });
+        $scope.loding = "";
 
 
 //        $scope.init_planet(planet);
     });
+
+    $scope.filter_planets = function(){
+        $scope.filtered_planets = _.filter($scope.planets, function(planet){ return planet.time_diff < $scope.filter_time_diff; });
+    }
 
     $scope.class_of_row = function(index) {
         if (index % 2 == 1) return "odd";
@@ -94,6 +103,7 @@ function planetIndexCtrl($scope, $http) {
 
 }
 
+
 function planetShowCtrl($scope, $location, $http) {
     splitUrlArray = $location.absUrl().split('/')
     $scope.id = splitUrlArray[splitUrlArray.length - 1];
@@ -159,6 +169,13 @@ function planetShowCtrl($scope, $location, $http) {
         seconds = parseInt((new Date() - new Date(planet.resource_report.time)) / 1000);
 
         planet.time_diff = seconds;
+        planet.time_diff_str = $scope.calculate_time_string(planet.resource_report.time);
+//        planet.time_diff_str = str + seconds + "초 전";
+//        planet.time_diff = a++;
+    };
+
+    $scope.calculate_time_string = function(time) {
+        seconds = parseInt((new Date() - new Date(time)) / 1000);
 
         minutes = parseInt(seconds / 60);
         seconds = seconds % 60;
@@ -167,9 +184,22 @@ function planetShowCtrl($scope, $location, $http) {
 
         str = ""
         if (hours > 0) str += hours + "시간 ";
-        str += minutes + "분 ";
-        planet.time_diff_str = str
-//        planet.time_diff_str = str + seconds + "초 전";
-//        planet.time_diff = a++;
-    };
+        str += minutes + "분 전 업데이트";
+        return str;
+    }
+
+    $scope.resource_report_field = ["metal","crystal","deuterium","energy"];
+    $scope.fleet_report_field = ["light_fighter", "heavy_fighter", "cruiser", "battleship", "small_cargo", "large_cargo", "colony_ship",
+        "battlecruiser", "bomber", "destroyer", "deathstar", "recycler", "espionage_probe", "solar_satellite"];
+    $scope.defense_report_field = ["rocket_launcher", "light_laser", "heavy_laser", "gauss_cannon", "ion_cannon", "plasma_turret",
+        "small_shield_dome", "large_shield_dome", "anti_ballistic_missiles", "interplanetary_missiles"];
+    $scope.building_report_field = ["metal_mine", "crystal_mine", "deuterium_synthesizer", "solar_plant", "fusion_reactor", "metal_storage",
+        "crystal_storage", "deuterium_tank", "shielded_metal_den", "underground_crystal_den", "seabed_deuterium_den",
+        "robotics_factory", "shipyard", "research_lab", "alliance_depot", "missile_silo", "nanite_factory",
+        "terraformer", "lunar_base", "sensor_phalanx", "jump_gate"];
+        $scope.research_report_field = ["energy_technology", "laser_technology", "ion_technology", "hyperspace_technology", "plasma_technology",
+        "combustion_drive", "impulse_drive", "hyperspace_drive", "espionage_technology", "computer_technology",
+        "astrophysics", "intergalactic_research_network", "graviton_technology", "weapons_technology",
+        "shielding_technology", "armor_technology"];
+
 }

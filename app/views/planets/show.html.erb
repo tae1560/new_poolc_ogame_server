@@ -3,4 +3,34 @@
     <li><a href="http://websim.speedsim.net/index.php?lang=en" target="_blank">  websim link </a></li>
     <li>{{planet.resource_report.text}}</li>
   </ul>
+  <ul>
+    <li>resource - {{calculate_time_string(planet.resource_report.time)}}</li>
+    <ul ng-repeat="field in resource_report_field">
+      <li>{{field}} : {{planet.resource_report[field] ? planet.resource_report[field] : 0}}</li>
+    </ul>
+  </ul>
+  <ul>
+    <li>fleet ({{planet.number_of_fleets}} 대) - {{calculate_time_string(planet.fleet_report.time)}}</li>
+    <ul ng-repeat="field in fleet_report_field">
+      <li>{{field}} : {{planet.fleet_report[field]}}</li>
+    </ul>
+  </ul>
+  <ul>
+    <li>defense ({{planet.number_of_defenses}} 대) - {{calculate_time_string(planet.defense_report.time)}}</li>
+    <ul ng-repeat="field in defense_report_field">
+      <li>{{field}} : {{planet.defense_report[field]}}</li>
+    </ul>
+  </ul>
+  <ul>
+    <li>building - {{calculate_time_string(planet.building_report.time)}}</li>
+    <ul ng-repeat="field in building_report_field">
+      <li>{{field}} : {{planet.building_report[field]}}</li>
+    </ul>
+  </ul>
+  <ul>
+    <li>research - {{calculate_time_string(planet.research_report.time)}}</li>
+    <ul ng-repeat="field in research_report_field">
+      <li>{{field}} : {{planet.research_report[field]}}</li>
+    </ul>
+  </ul>
 </div>
