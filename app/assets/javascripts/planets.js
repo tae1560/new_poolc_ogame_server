@@ -211,6 +211,6 @@ function planetShowCtrl($scope, $location, $http) {
         $scope.research_report_field = ["energy_technology", "laser_technology", "ion_technology", "hyperspace_technology", "plasma_technology",
         "combustion_drive", "impulse_drive", "hyperspace_drive", "espionage_technology", "computer_technology",
         "astrophysics", "intergalactic_research_network", "graviton_technology", "weapons_technology",
-        "shielding_technology", "armor_technology"];
+        "shielding_technology", "armour_technology"];
 
 }

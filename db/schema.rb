@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131110230817) do
+ActiveRecord::Schema.define(version: 20131205015421) do
 
   create_table "moons", force: true do |t|
     t.string   "name"
@@ -116,7 +116,7 @@ ActiveRecord::Schema.define(version: 20131110230817) do
     t.integer  "graviton_technology"
     t.integer  "weapons_technology"
     t.integer  "shielding_technology"
-    t.integer  "armor_technology"
+    t.integer  "armour_technology"
     t.integer  "planet_id"
     t.integer  "moon_id"
     t.datetime "created_at"
