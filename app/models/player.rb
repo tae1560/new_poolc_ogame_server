@@ -6,6 +6,8 @@ class Player < ActiveRecord::Base
 
   has_many :planets
 
+  belongs_to :research_report, :class_name => "Report"
+
   def hashed_password
     return Digest::MD5.hexdigest(self.password) if self.password
     return nil

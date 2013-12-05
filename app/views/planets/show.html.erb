@@ -1,7 +1,10 @@
 <div ng-controller="planetShowCtrl" class="itsthetable">
   <ul>
     <li><a href="http://websim.speedsim.net/index.php?lang=en" target="_blank">  websim link </a></li>
-    <li>{{planet.resource_report.text}}</li>
+    <li>최근 report</li>
+    <ul>
+      <li>{{planet.resource_report.text}}</li>
+    </ul>
   </ul>
   <ul>
     <li>resource - {{calculate_time_string(planet.resource_report.time)}}</li>
@@ -28,9 +31,10 @@
     </ul>
   </ul>
   <ul>
-    <li>research - {{calculate_time_string(planet.research_report.time)}}</li>
+    <li>research - {{calculate_time_string(planet.player.research_report.time)}}</li>
     <ul ng-repeat="field in research_report_field">
-      <li>{{field}} : {{planet.research_report[field]}}</li>
+      <li>{{field}} : {{planet.player.research_report[field]}}</li>
     </ul>
   </ul>
 </div>
+

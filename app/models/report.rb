@@ -109,6 +109,12 @@ class Report < ActiveRecord::Base
 
     if self.text.include? "Research"
       parse_researches
+
+      report = self.planet.player.research_report
+      if report == nil or report.time < self.time
+        self.planet.player.research_report = self
+        self.planet.player.save!
+      end
     end
 
     puts self.inspect
@@ -178,6 +184,12 @@ class Report < ActiveRecord::Base
     if report == nil or report.time < self.time
       self.planet.send("#{key}_report=", self)
       self.planet.save!
+    end
+  end
+
+  def self.parse_all
+    Report.find_each do |report|
+      report.parse_all
     end
   end
 
