@@ -18,12 +18,13 @@
       <th>함대 수</th>
       <th>방시 수</th>
       <th>공격</th>
+      <th>상세정보</th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="planet in filtered_planets | orderBy:orderProp" class="{{class_of_row($index)}}">
       <td>{{$index}}</td>
-      <td><a href="planets/{{planet.id}}"  target="_blank">{{planet.coords}}</a></td>
+      <td><a href="{{planet.galaxy_address}}"  target="_blank">{{planet.coords}}</a></td>
       <td>{{planet.resource_report.metal}}</td>
       <td>{{planet.resource_report.crystal}}</td>
       <td>{{planet.resource_report.deuterium}}</td>
@@ -34,6 +35,7 @@
       <td>{{planet.number_of_fleets}}</td>
       <td>{{planet.number_of_defenses}}</td>
       <td><a href="{{planet.attack_address}}" target="_blank">공격</a></td>
+      <td><a href="planets/{{planet.id}}"  target="_blank">상세정보</a></td>
     </tr>
     </tbody>
   </table>

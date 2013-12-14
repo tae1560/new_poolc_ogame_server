@@ -8,10 +8,9 @@ function planetIndexCtrl($scope, $http) {
         $scope.planets = data;
 
         _.each($scope.planets, $scope.init_planet);
-        $scope.filter_planets();
+        $scope.filter_with_position();
 
         $scope.loding = "";
-
 
 //        $scope.init_planet(planet);
     });
@@ -46,6 +45,7 @@ function planetIndexCtrl($scope, $http) {
         planet.number_of_small_cargo = Math.ceil(planet.resource/2/5000);
         planet.number_of_large_cargo = Math.ceil(planet.resource/2/5000/5);
         planet.attack_address = "http://s119-en.ogame.gameforge.com/game/index.php?page=fleet1&galaxy="+planet.galaxy+"&system="+planet.system+"&position="+planet.position+"&type=1&mission=1&am203="+planet.number_of_large_cargo;
+        planet.galaxy_address = "http://s119-en.ogame.gameforge.com/game/index.php?page=galaxy&no_header=1&galaxy="+planet.galaxy+"&system="+planet.system+"&planet="+planet.position
         $scope.update_planet_time(planet);
 
         if(planet.fleet_report) {
