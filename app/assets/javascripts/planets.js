@@ -1,3 +1,80 @@
+fleets = [{name:"light_fighter", metal:3000, crystal:1000, deuterium:0, is_attack:true},
+    {name:"heavy_fighter", metal:6000, crystal:4000, deuterium:0, is_attack:true},
+    {name:"cruiser", metal:20000, crystal:7000, deuterium:2000, is_attack:true},
+    {name:"battleship", metal:45000, crystal:15000, deuterium:0, is_attack:true},
+    {name:"small_cargo", metal:2000, crystal:2000, deuterium:0, is_attack:false},
+    {name:"large_cargo", metal:6000, crystal:6000, deuterium:0, is_attack:false},
+    {name:"colony_ship", metal:10000, crystal:20000, deuterium:10000, is_attack:false},
+    {name:"battlecruiser", metal:30000, crystal:40000, deuterium:15000, is_attack:true},
+    {name:"bomber", metal:50000, crystal:25000, deuterium:15000, is_attack:true},
+    {name:"destroyer", metal:60000, crystal:50000, deuterium:15000, is_attack:true},
+    {name:"deathstar", metal:5000000, crystal:4000000, deuterium:1000000, is_attack:true},
+    {name:"recycler", metal:10000, crystal:6000, deuterium:2000, is_attack:false},
+    {name:"espionage_probe", metal:0, crystal:1000, deuterium:0, is_attack:false},
+    {name:"solar_satellite", metal:0, crystal:2000, deuterium:500, is_attack:false}]
+
+defenses = [{name:"rocket_launcher", metal:2000, crystal:0, deuterium:0},
+    {name:"light_laser", metal:1500, crystal:500, deuterium:0},
+    {name:"heavy_laser", metal:6000, crystal:2000, deuterium:0},
+    {name:"gauss_cannon", metal:20000, crystal:15000, deuterium:2000},
+    {name:"ion_cannon", metal:2000, crystal:6000, deuterium:0},
+    {name:"plasma_turret", metal:50000, crystal:50000, deuterium:30000},
+    {name:"small_shield_dome", metal:10000, crystal:10000, deuterium:0},
+    {name:"large_shield_dome", metal:50000, crystal:50000, deuterium:0}]
+
+function planet_setting(planet) {
+    var pattern = /(\d+):(\d+):(\d+)/;
+    var parsed_string = pattern.exec(planet.coords);
+    planet.galaxy = parsed_string[1];
+    planet.system = parsed_string[2];
+    planet.position = parsed_string[3];
+    planet.resource_metal = planet.resource_report.metal;
+    planet.resource_crystal = planet.resource_report.crystal;
+    planet.resource_deuterium = planet.resource_report.deuterium;
+    planet.resource = planet.resource_report.metal + planet.resource_report.crystal + planet.resource_report.deuterium;
+    planet.number_of_small_cargo = Math.ceil(planet.resource/2/5000);
+    planet.number_of_large_cargo = Math.ceil(planet.resource/2/5000/5);
+    planet.attack_address = "http://s119-en.ogame.gameforge.com/game/index.php?page=fleet1&galaxy="+planet.galaxy+"&system="+planet.system+"&position="+planet.position+"&type=1&mission=1&am203="+planet.number_of_large_cargo;
+    planet.galaxy_address = "http://s119-en.ogame.gameforge.com/game/index.php?page=galaxy&no_header=1&galaxy="+planet.galaxy+"&system="+planet.system+"&planet="+planet.position
+
+    planet.debris = 0;
+    planet.debris_metal = 0;
+    planet.debris_crystal = 0;
+
+    if(planet.fleet_report) {
+        planet.number_of_fleets = 0;
+
+        _.each(fleets, function(fleet) {
+            if(planet.fleet_report[fleet.name]) {
+                planet.number_of_fleets += planet.fleet_report[fleet.name];
+                planet.debris_metal += planet.fleet_report[fleet.name] * fleet.metal;
+                planet.debris_crystal += planet.fleet_report[fleet.name] * fleet.crystal;
+            }
+        });
+    } else {
+        planet.number_of_fleets = "-";
+    }
+
+    if(planet.defense_report) {
+        planet.number_of_defenses = 0;
+
+        _.each(defenses, function(defense) {
+            if(planet.defense_report[defense.name]) {
+                planet.number_of_defenses += planet.defense_report[defense.name];
+                planet.debris_metal += planet.defense_report[defense.name] * defense.metal;
+                planet.debris_crystal += planet.defense_report[defense.name] * defense.crystal;
+            }
+        });
+    } else {
+        planet.number_of_defenses = "-";
+    }
+
+    planet.debris_metal *= 0.3;
+    planet.debris_crystal *= 0.3;
+    planet.debris = planet.debris_metal + planet.debris_crystal;
+    planet.resource_debris = planet.resource + planet.debris;
+}
+
 function planetIndexCtrl($scope, $http) {
 
     $scope.loding = "loding";
@@ -36,46 +113,20 @@ function planetIndexCtrl($scope, $http) {
     };
 
     $scope.init_planet = function(planet) {
-        var pattern = /(\d+):(\d+):(\d+)/;
-        var parsed_string = pattern.exec(planet.coords);
-        planet.galaxy = parsed_string[1];
-        planet.system = parsed_string[2];
-        planet.position = parsed_string[3];
-        planet.resource = planet.resource_report.metal + planet.resource_report.crystal + planet.resource_report.deuterium;
-        planet.number_of_small_cargo = Math.ceil(planet.resource/2/5000);
-        planet.number_of_large_cargo = Math.ceil(planet.resource/2/5000/5);
-        planet.attack_address = "http://s119-en.ogame.gameforge.com/game/index.php?page=fleet1&galaxy="+planet.galaxy+"&system="+planet.system+"&position="+planet.position+"&type=1&mission=1&am203="+planet.number_of_large_cargo;
-        planet.galaxy_address = "http://s119-en.ogame.gameforge.com/game/index.php?page=galaxy&no_header=1&galaxy="+planet.galaxy+"&system="+planet.system+"&planet="+planet.position
+
+        planet_setting(planet);
+
         $scope.update_planet_time(planet);
 
-        if(planet.fleet_report) {
-            planet.number_of_fleets = 0;
 
-            fleets = ["light_fighter", "heavy_fighter", "cruiser", "battleship", "small_cargo", "large_cargo", "colony_ship",
-                "battlecruiser", "bomber", "destroyer", "deathstar", "recycler", "espionage_probe", "solar_satellite"]
-
-            _.each(fleets, function(fleet) {
-                if(planet.fleet_report[fleet]) planet.number_of_fleets += planet.fleet_report[fleet];
-            });
-        } else {
-            planet.number_of_fleets = "-";
-        }
-
-        if(planet.defense_report) {
-            planet.number_of_defenses = 0;
-
-            defenses = ["rocket_launcher", "light_laser", "heavy_laser", "gauss_cannon", "ion_cannon", "plasma_turret",
-                "small_shield_dome", "large_shield_dome"]
-
-            _.each(defenses, function(defense) {
-                if(planet.defense_report[defense]) planet.number_of_defenses += planet.defense_report[defense];
-            });
-        } else {
-            planet.number_of_defenses = "-";
-        }
     };
 
     $scope.orderProp = "-resource";
+
+    $scope.setOrderProp = function(prop) {
+        if($scope.orderProp == prop) $scope.orderProp = "-" + prop;
+        else $scope.orderProp = prop;
+    }
 
     $scope.scheduler = function() {
         _.each($scope.planets, $scope.update_planet_time);
@@ -119,7 +170,7 @@ function planetShowCtrl($scope, $location, $http) {
     splitUrlArray = $location.absUrl().split('/')
     $scope.id = splitUrlArray[splitUrlArray.length - 1];
 
-    $scope.planet = "loading";
+    $scope.loading = "loading";
 
     $http.get('/planets/'+ $scope.id +'.json').success(function(data) {
         $scope.planet = data;
@@ -136,42 +187,8 @@ function planetShowCtrl($scope, $location, $http) {
     });
 
     $scope.init_planet = function(planet) {
-        var pattern = /(\d+):(\d+):(\d+)/;
-        var parsed_string = pattern.exec(planet.coords);
-        planet.galaxy = parsed_string[1];
-        planet.system = parsed_string[2];
-        planet.position = parsed_string[3];
-        planet.resource = planet.resource_report.metal + planet.resource_report.crystal + planet.resource_report.deuterium;
-        planet.number_of_small_cargo = Math.ceil(planet.resource/2/5000);
-        planet.number_of_large_cargo = Math.ceil(planet.resource/2/5000/5);
-        planet.attack_address = "http://s119-en.ogame.gameforge.com/game/index.php?page=fleet1&galaxy="+planet.galaxy+"&system="+planet.system+"&position="+planet.position+"&type=1&mission=1&am203="+planet.number_of_large_cargo;
+        planet_setting(planet);
         $scope.update_planet_time(planet);
-
-        if(planet.fleet_report) {
-            planet.number_of_fleets = 0;
-
-            fleets = ["light_fighter", "heavy_fighter", "cruiser", "battleship", "small_cargo", "large_cargo", "colony_ship",
-                "battlecruiser", "bomber", "destroyer", "deathstar", "recycler", "espionage_probe", "solar_satellite"]
-
-            _.each(fleets, function(fleet) {
-                if(planet.fleet_report[fleet]) planet.number_of_fleets += planet.fleet_report[fleet];
-            });
-        } else {
-            planet.number_of_fleets = "-";
-        }
-
-        if(planet.defense_report) {
-            planet.number_of_defenses = 0;
-
-            defenses = ["rocket_launcher", "light_laser", "heavy_laser", "gauss_cannon", "ion_cannon", "plasma_turret",
-                "small_shield_dome", "large_shield_dome"]
-
-            _.each(defenses, function(defense) {
-                if(planet.defense_report[defense]) planet.number_of_defenses += planet.defense_report[defense];
-            });
-        } else {
-            planet.number_of_defenses = "-";
-        }
     };
 
     $scope.update_planet_time = function(planet) {
