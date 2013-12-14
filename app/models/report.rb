@@ -22,7 +22,7 @@ class Report < ActiveRecord::Base
     # Resources on Casaedus [1:173:11] (Player: darkangelaz) at 11-11 21:24:03
     # planet_name, coord, player_name, time
     # key : planet_name, coord, player_name
-    matched_string = message.match(/Resources on (?:[^\[]*) \[(\d+:\d+:\d+)\](?:\s*)\(Player: ([^)]*)\)(?:\s*)at (\d+-\d+ \d+:\d+:\d+)/)
+    matched_string = message.match(/Resources on ([^\[]*) \[(\d+:\d+:\d+)\](?:\s*)\(Player: ([^)]*)\)(?:\s*)at (\d+-\d+ \d+:\d+:\d+)/)
 
     if matched_string
       planet_name = matched_string[1]
