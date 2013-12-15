@@ -40,6 +40,7 @@ function planet_setting(planet) {
     planet.debris = 0;
     planet.debris_metal = 0;
     planet.debris_crystal = 0;
+    planet.attack_fleet_score = 0;
 
     if(planet.fleet_report) {
         planet.number_of_fleets = 0;
@@ -49,6 +50,8 @@ function planet_setting(planet) {
                 planet.number_of_fleets += planet.fleet_report[fleet.name];
                 planet.debris_metal += planet.fleet_report[fleet.name] * fleet.metal;
                 planet.debris_crystal += planet.fleet_report[fleet.name] * fleet.crystal;
+                if(fleet.is_attack)
+                    planet.attack_fleet_score += planet.fleet_report[fleet.name] * (fleet.metal + fleet.crystal + fleet.deuterium);
             }
         });
     } else {
@@ -72,6 +75,7 @@ function planet_setting(planet) {
     planet.debris_metal *= 0.3;
     planet.debris_crystal *= 0.3;
     planet.debris = planet.debris_metal + planet.debris_crystal;
+    planet.number_of_recycler = Math.ceil(planet.debris/20000);
     planet.resource_debris = planet.resource + planet.debris;
 }
 
