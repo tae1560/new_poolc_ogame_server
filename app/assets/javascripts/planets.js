@@ -1,17 +1,17 @@
-fleets = [{name:"light_fighter", metal:3000, crystal:1000, deuterium:0, is_attack:true},
-    {name:"heavy_fighter", metal:6000, crystal:4000, deuterium:0, is_attack:true},
-    {name:"cruiser", metal:20000, crystal:7000, deuterium:2000, is_attack:true},
-    {name:"battleship", metal:45000, crystal:15000, deuterium:0, is_attack:true},
-    {name:"small_cargo", metal:2000, crystal:2000, deuterium:0, is_attack:false},
-    {name:"large_cargo", metal:6000, crystal:6000, deuterium:0, is_attack:false},
-    {name:"colony_ship", metal:10000, crystal:20000, deuterium:10000, is_attack:false},
-    {name:"battlecruiser", metal:30000, crystal:40000, deuterium:15000, is_attack:true},
-    {name:"bomber", metal:50000, crystal:25000, deuterium:15000, is_attack:true},
-    {name:"destroyer", metal:60000, crystal:50000, deuterium:15000, is_attack:true},
-    {name:"deathstar", metal:5000000, crystal:4000000, deuterium:1000000, is_attack:true},
-    {name:"recycler", metal:10000, crystal:6000, deuterium:2000, is_attack:false},
-    {name:"espionage_probe", metal:0, crystal:1000, deuterium:0, is_attack:false},
-    {name:"solar_satellite", metal:0, crystal:2000, deuterium:500, is_attack:false}]
+fleets = [{name:"light_fighter", metal:3000, crystal:1000, deuterium:0, attack_ratio:1},
+    {name:"heavy_fighter", metal:6000, crystal:4000, deuterium:0, attack_ratio:1},
+    {name:"cruiser", metal:20000, crystal:7000, deuterium:2000, attack_ratio:1},
+    {name:"battleship", metal:45000, crystal:15000, deuterium:0, attack_ratio:1},
+    {name:"small_cargo", metal:2000, crystal:2000, deuterium:0, attack_ratio:0.25},
+    {name:"large_cargo", metal:6000, crystal:6000, deuterium:0, attack_ratio:0.25},
+    {name:"colony_ship", metal:10000, crystal:20000, deuterium:10000, attack_ratio:0.25},
+    {name:"battlecruiser", metal:30000, crystal:40000, deuterium:15000, attack_ratio:1},
+    {name:"bomber", metal:50000, crystal:25000, deuterium:15000, attack_ratio:1},
+    {name:"destroyer", metal:60000, crystal:50000, deuterium:15000, attack_ratio:1},
+    {name:"deathstar", metal:5000000, crystal:4000000, deuterium:1000000, attack_ratio:1},
+    {name:"recycler", metal:10000, crystal:6000, deuterium:2000, attack_ratio:0.25},
+    {name:"espionage_probe", metal:0, crystal:1000, deuterium:0, attack_ratio:0.25},
+    {name:"solar_satellite", metal:0, crystal:2000, deuterium:500, attack_ratio:0.25}]
 
 defenses = [{name:"rocket_launcher", metal:2000, crystal:0, deuterium:0},
     {name:"light_laser", metal:1500, crystal:500, deuterium:0},
@@ -50,8 +50,7 @@ function planet_setting(planet) {
                 planet.number_of_fleets += planet.fleet_report[fleet.name];
                 planet.debris_metal += planet.fleet_report[fleet.name] * fleet.metal;
                 planet.debris_crystal += planet.fleet_report[fleet.name] * fleet.crystal;
-                if(fleet.is_attack)
-                    planet.attack_fleet_score += planet.fleet_report[fleet.name] * (fleet.metal + fleet.crystal + fleet.deuterium);
+                planet.attack_fleet_score += planet.fleet_report[fleet.name] * (fleet.metal + fleet.crystal + fleet.deuterium) * fleet.attack_ratio;
             }
         });
     } else {
