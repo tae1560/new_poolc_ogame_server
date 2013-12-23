@@ -110,7 +110,7 @@ function planetIndexCtrl($scope, $http) {
         }
     }
     
-    filter_player_name = "";
+    $filter_player_name = "";
     
     $scope.filter_with_playername = function() {
         if($scope.filter_player_name.length > 0) {
