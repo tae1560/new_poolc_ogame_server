@@ -109,6 +109,17 @@ function planetIndexCtrl($scope, $http) {
             $scope.filter_planets();
         }
     }
+    
+    $filter_player_name = "";
+    
+    $scope.filter_with_playername = function() {
+        if($scope.filter_player_name.length > 0) {
+            $scope.filtered_planets = _.filter($scope.planets, function(planet){ return planet.name == $scope.filter_player_name});
+        } else {
+            $scope.filter_planets();
+        }
+        
+    }
 
     $scope.class_of_row = function(index) {
         if (index % 2 == 1) return "odd";
