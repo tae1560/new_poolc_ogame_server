@@ -110,11 +110,11 @@ function planetIndexCtrl($scope, $http) {
         }
     }
     
-    $filter_player_name = "";
+    $scope.filter_player_name = "";
     
     $scope.filter_with_playername = function() {
         if($scope.filter_player_name.length > 0) {
-            $scope.filtered_planets = _.filter($scope.planets, function(planet){ return planet.name == $scope.filter_player_name});
+            $scope.filtered_planets = _.filter($scope.planets, function(planet){ return planet.player.name.indexOf($scope.filter_player_name) !== -1;});
         } else {
             $scope.filter_planets();
         }
