@@ -10,8 +10,8 @@ fleets = [{name:"light_fighter", metal:3000, crystal:1000, deuterium:0, attack_r
     {name:"destroyer", metal:60000, crystal:50000, deuterium:15000, attack_ratio:1},
     {name:"deathstar", metal:5000000, crystal:4000000, deuterium:1000000, attack_ratio:1},
     {name:"recycler", metal:10000, crystal:6000, deuterium:2000, attack_ratio:0.25},
-    {name:"espionage_probe", metal:0, crystal:1000, deuterium:0, attack_ratio:0.25},
-    {name:"solar_satellite", metal:0, crystal:2000, deuterium:500, attack_ratio:0.25}]
+    {name:"espionage_probe", metal:0, crystal:1000, deuterium:0, attack_ratio:0},
+    {name:"solar_satellite", metal:0, crystal:2000, deuterium:500, attack_ratio:0}]
 
 defenses = [{name:"rocket_launcher", metal:2000, crystal:0, deuterium:0},
     {name:"light_laser", metal:1500, crystal:500, deuterium:0},
