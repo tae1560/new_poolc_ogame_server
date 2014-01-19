@@ -38,7 +38,8 @@ class Report < ActiveRecord::Base
       new_datetime = DateTime.parse(new_time)
       #puts "time : #{new_time} #{DateTime.parse(new_time)}"
 
-      planet = Planet.where(:name => planet_name, :coords => coords).first
+      #planet = Planet.where(:name => planet_name, :coords => coords).first
+      planet = Planet.where(:coords => coords).first
       #puts "planet : #{planet.inspect}"
 
       # todo 달일 경우에 케이스를 만들어 주어야 함
@@ -83,6 +84,12 @@ class Report < ActiveRecord::Base
 
   def parse_all
     parse_resources
+
+    if this.energy == 0 or this.energy == nil
+      this.delete
+      return
+    end
+
     link_report "resource"
 
     #belongs_to :resource_report, :class_name => "Report"
