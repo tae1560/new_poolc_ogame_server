@@ -85,8 +85,8 @@ class Report < ActiveRecord::Base
   def parse_all
     parse_resources
 
-    if this.energy == 0 or this.energy == nil
-      this.delete
+    if self.energy == 0 or self.energy == nil
+      self.delete
       return
     end
 
